@@ -33,6 +33,12 @@ def startup():
     print("MovieMood started — TVmaze API & Personalized Genre Notifications active")
 
 
+@app.get("/")
+@app.head("/")
+def root():
+    return {"message": "MovieMood Backend API is running", "docs": "/api/docs"}
+
+
 @app.get("/health")
 @app.get("/api/health")
 def health_check():
