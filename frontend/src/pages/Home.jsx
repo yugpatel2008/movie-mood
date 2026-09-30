@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getMovies } from '../services/movieApi';
 import MovieGrid from '../components/MovieGrid';
 import SearchBar from '../components/SearchBar';
@@ -9,6 +9,7 @@ import { FiFilm, FiTrendingUp, FiStar } from 'react-icons/fi';
 export default function Home() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getMovies()
@@ -21,7 +22,7 @@ export default function Home() {
 
   const handleSearch = (query) => {
     if (query.trim()) {
-      window.location.href = `/movies?search=${encodeURIComponent(query)}`;
+      navigate(`/movies?search=${encodeURIComponent(query)}`);
     }
   };
 
@@ -46,16 +47,16 @@ export default function Home() {
             Watch. Review. Feel the Mood.
           </p>
           <p className="text-gray-400 text-base md:text-lg mb-10 leading-relaxed max-w-xl mx-auto">
-            Discover movies, share your thoughts, and let AI understand the mood behind every review.
+            Discover movies & shows, share your thoughts, and let AI understand the mood behind every review.
           </p>
 
           <div className="flex justify-center mb-6">
-            <SearchBar onSearch={handleSearch} placeholder="Search for a movie..." />
+            <SearchBar onSearch={handleSearch} placeholder="Search movies or shows..." />
           </div>
 
           <div className="flex justify-center gap-4">
             <Link to="/movies" className="clay-btn clay-btn-primary text-base px-8 py-3.5">
-              <FiTrendingUp /> Explore Movies
+              <FiTrendingUp /> Explore Titles
             </Link>
           </div>
         </div>
@@ -64,7 +65,7 @@ export default function Home() {
       {/* Featured Movies */}
       <section className="px-6 py-8 md:py-12">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold flex items-center gap-2"><FiStar className="text-primary-400" /> Featured Movies</h2>
+          <h2 className="text-2xl font-bold flex items-center gap-2"><FiStar className="text-primary-400" /> Featured Movies & Shows</h2>
           <Link to="/movies" className="text-primary-400 font-semibold text-sm transition-colors hover:text-primary-300">View All →</Link>
         </div>
         {loading ? <LoadingIndicator /> : <MovieGrid movies={featuredMovies} />}
@@ -74,13 +75,13 @@ export default function Home() {
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-8 md:py-16">
         <div className="clay-feature">
           <span className="text-4xl block mb-4">🎬</span>
-          <h3 className="text-lg font-bold mb-2">Discover Movies</h3>
-          <p className="text-sm text-gray-400 leading-relaxed">Browse our curated collection and find your next favorite film.</p>
+          <h3 className="text-lg font-bold mb-2">Discover Titles</h3>
+          <p className="text-sm text-gray-400 leading-relaxed">Browse live titles from TVmaze and find your next favorite show.</p>
         </div>
         <div className="clay-feature">
           <span className="text-4xl block mb-4">✍️</span>
           <h3 className="text-lg font-bold mb-2">Share Reviews</h3>
-          <p className="text-sm text-gray-400 leading-relaxed">Write reviews and rate movies to help others decide what to watch.</p>
+          <p className="text-sm text-gray-400 leading-relaxed">Write reviews and rate titles to help others decide what to watch.</p>
         </div>
         <div className="clay-feature">
           <span className="text-4xl block mb-4">🤖</span>
