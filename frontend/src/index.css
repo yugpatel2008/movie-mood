@@ -1,0 +1,689 @@
+@import "tailwindcss";
+
+/* ===== MOVIEMOOD CLAYMORPHISM DESIGN SYSTEM ===== */
+
+@theme {
+  /* Primary palette - deep purple */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-800: #5b21b6;
+  --color-primary-900: #4c1d95;
+  --color-primary-950: #2e1065;
+
+  /* Backgrounds - deep navy/charcoal */
+  --color-bg-primary: #0c0c18;
+  --color-bg-secondary: #111122;
+  --color-bg-card: #181830;
+  --color-bg-elevated: #1e1e3a;
+  --color-bg-input: #141428;
+
+  /* Sentiment colors */
+  --color-positive: #10b981;
+  --color-negative: #ef4444;
+  --color-mismatch: #f59e0b;
+
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ===== CLAY SHADOW TOKENS ===== */
+:root {
+  /* Outer clay shadow - soft raised look */
+  --clay-shadow: 
+    6px 6px 14px rgba(0, 0, 0, 0.35),
+    -4px -4px 12px rgba(255, 255, 255, 0.03),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.06),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.15);
+
+  /* Elevated clay shadow - more depth */
+  --clay-shadow-elevated:
+    8px 8px 18px rgba(0, 0, 0, 0.4),
+    -5px -5px 14px rgba(255, 255, 255, 0.04),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.07),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.18);
+
+  /* Inset / pressed clay shadow */
+  --clay-shadow-inset:
+    inset 4px 4px 10px rgba(0, 0, 0, 0.4),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.04);
+
+  /* Subtle clay shadow for smaller elements */
+  --clay-shadow-sm:
+    3px 3px 8px rgba(0, 0, 0, 0.3),
+    -2px -2px 6px rgba(255, 255, 255, 0.025),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.05),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.1);
+
+  /* Glow accent for hover */
+  --clay-glow-primary: 0 0 20px rgba(124, 58, 237, 0.2);
+
+  /* Border radii */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-clay: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== BASE STYLES ===== */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-bg-primary text-gray-100 font-inter min-h-screen antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.3);
+    color: white;
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-primary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+}
+
+/* ===== CLAY COMPONENT CLASSES ===== */
+@layer components {
+
+  /* === CLAY CARD === */
+  .clay-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--clay-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: var(--transition-clay);
+  }
+  .clay-card:hover {
+    box-shadow: var(--clay-shadow-elevated);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .clay-card-elevated {
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--clay-shadow-elevated);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition-clay);
+  }
+
+  /* === CLAY BUTTONS === */
+  .clay-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-clay);
+    box-shadow: var(--clay-shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .clay-btn:active {
+    box-shadow: var(--clay-shadow-inset);
+    transform: translateY(1px);
+  }
+  .clay-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+  .clay-btn:disabled:active {
+    box-shadow: var(--clay-shadow-sm);
+  }
+
+  .clay-btn-primary {
+    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    color: white;
+  }
+  .clay-btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--clay-shadow-sm), var(--clay-glow-primary);
+  }
+
+  .clay-btn-secondary {
+    background: var(--color-bg-card);
+    color: #9ca3af;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .clay-btn-secondary:hover:not(:disabled) {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .clay-btn-danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+  }
+  .clay-btn-danger:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.25);
+    transform: translateY(-1px);
+  }
+
+  /* Icon buttons */
+  .clay-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: #6b7280;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-clay);
+  }
+  .clay-icon-btn:hover {
+    color: var(--color-primary-400);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: var(--clay-shadow-sm);
+  }
+  .clay-icon-btn.danger:hover {
+    color: var(--color-negative);
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  /* === CLAY INPUTS === */
+  .clay-input-group {
+    margin-bottom: 1.25rem;
+  }
+  .clay-input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .clay-input {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    background: var(--color-bg-input);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    color: white;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-shadow: var(--clay-shadow-inset);
+    transition: var(--transition-clay);
+    outline: none;
+  }
+  .clay-input::placeholder {
+    color: #4b5563;
+  }
+  .clay-input:focus {
+    border-color: var(--color-primary-600);
+    box-shadow: var(--clay-shadow-inset), 0 0 0 3px rgba(124, 58, 237, 0.2);
+  }
+
+  textarea.clay-input {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+  }
+
+  /* === CLAY BADGE === */
+  .clay-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    box-shadow: var(--clay-shadow-sm);
+    transition: var(--transition-clay);
+  }
+  .clay-badge-positive {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+  }
+  .clay-badge-negative {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+  }
+  .clay-badge-mismatch {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+  }
+
+  /* === CLAY STAT CARD === */
+  .clay-stat {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--clay-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    min-width: 120px;
+    transition: var(--transition-clay);
+  }
+  .clay-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--clay-shadow-elevated);
+  }
+  .clay-stat-icon {
+    font-size: 1.4rem;
+    color: var(--color-primary-400);
+    margin-bottom: 0.35rem;
+  }
+  .clay-stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .clay-stat-label {
+    font-size: 0.65rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.15rem;
+  }
+
+  /* === CLAY NAVBAR === */
+  .clay-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(12, 12, 24, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .clay-nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    color: #9ca3af;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition-clay);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .clay-nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* === CLAY MOVIE CARD === */
+  .clay-movie-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--clay-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transition: var(--transition-clay);
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .clay-movie-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--clay-shadow-elevated), var(--clay-glow-primary);
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+  .clay-movie-card:hover .clay-movie-poster img {
+    transform: scale(1.06);
+  }
+
+  .clay-movie-poster {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: var(--color-bg-secondary);
+  }
+  .clay-movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .clay-movie-poster .year-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #d1d5db;
+  }
+
+  .clay-movie-info {
+    padding: 1rem 1.15rem;
+  }
+  .clay-movie-info h3 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .clay-movie-info .genre {
+    font-size: 0.76rem;
+    color: #6b7280;
+    margin-bottom: 0.6rem;
+  }
+  .clay-movie-info .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
+  }
+  .clay-movie-info .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #fbbf24;
+    font-weight: 700;
+  }
+  .clay-movie-info .review-count {
+    color: #6b7280;
+  }
+
+  /* === CLAY SEARCH BAR === */
+  .clay-search {
+    display: flex;
+    align-items: center;
+    background: var(--color-bg-input);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--clay-shadow-inset);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.35rem 0.35rem 0.35rem 1.1rem;
+    max-width: 420px;
+    width: 100%;
+    transition: var(--transition-clay);
+  }
+  .clay-search:focus-within {
+    border-color: var(--color-primary-600);
+    box-shadow: var(--clay-shadow-inset), 0 0 0 3px rgba(124, 58, 237, 0.15);
+  }
+  .clay-search input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+  }
+  .clay-search input::placeholder {
+    color: #4b5563;
+  }
+  .clay-search button {
+    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    color: white;
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.82rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-clay);
+    box-shadow: var(--clay-shadow-sm);
+  }
+  .clay-search button:hover {
+    transform: translateY(-1px);
+  }
+  .clay-search button:active {
+    transform: translateY(0);
+    box-shadow: var(--clay-shadow-inset);
+  }
+
+  /* === CLAY REVIEW CARD === */
+  .clay-review {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--clay-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: var(--transition-clay);
+  }
+  .clay-review:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--clay-shadow-elevated);
+  }
+
+  /* === CLAY FORM === */
+  .clay-form {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--clay-shadow-elevated);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2rem 2.25rem;
+  }
+
+  /* === SENTIMENT BAR === */
+  .clay-sentiment-bar {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-input);
+    box-shadow: var(--clay-shadow-inset);
+    display: flex;
+    overflow: hidden;
+  }
+  .clay-sentiment-bar .positive {
+    background: linear-gradient(90deg, #10b981, #34d399);
+    transition: width 0.6s ease;
+  }
+  .clay-sentiment-bar .negative {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    transition: width 0.6s ease;
+  }
+
+  /* === SPINNER === */
+  .clay-spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid rgba(255, 255, 255, 0.06);
+    border-top-color: var(--color-primary-600);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    box-shadow: var(--clay-shadow-sm);
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* === AVATAR === */
+  .clay-avatar {
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: white;
+    box-shadow: var(--clay-shadow-sm);
+    flex-shrink: 0;
+  }
+  .clay-avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 0.85rem;
+  }
+  .clay-avatar-lg {
+    width: 80px;
+    height: 80px;
+    font-size: 1.8rem;
+  }
+
+  /* === FEATURE CARD (Home page) === */
+  .clay-feature {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--clay-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition-clay);
+  }
+  .clay-feature:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--clay-shadow-elevated);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* === ALERT BOX === */
+  .clay-alert {
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.88rem;
+    box-shadow: var(--clay-shadow-sm);
+  }
+  .clay-alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  .clay-alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  .clay-alert-info {
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--color-primary-300);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+  }
+
+  /* ===== LEGACY COMPAT (keep existing tailwind btn/form classes working) ===== */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold transition-all duration-200;
+    border-radius: var(--radius-md);
+    box-shadow: var(--clay-shadow-sm);
+  }
+  .btn:active {
+    box-shadow: var(--clay-shadow-inset);
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    color: white;
+  }
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--clay-shadow-sm), var(--clay-glow-primary);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-secondary {
+    background: var(--color-bg-card);
+    color: #9ca3af;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .btn-secondary:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .btn-icon {
+    @apply p-2 flex items-center justify-center;
+    border-radius: var(--radius-sm);
+    color: #6b7280;
+    transition: var(--transition-clay);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-icon:hover {
+    color: var(--color-primary-400);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: var(--clay-shadow-sm);
+  }
+  .btn-icon-danger:hover {
+    color: var(--color-negative) !important;
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .form-group label {
+    @apply block text-sm font-semibold mb-2;
+    color: #9ca3af;
+    letter-spacing: 0.02em;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1.1rem;
+    background: var(--color-bg-input);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    color: white;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-shadow: var(--clay-shadow-inset);
+    transition: var(--transition-clay);
+    outline: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder {
+    color: #4b5563;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--color-primary-600);
+    box-shadow: var(--clay-shadow-inset), 0 0 0 3px rgba(124, 58, 237, 0.2);
+  }
+}
+
+/* === MAIN CONTENT OFFSET FOR FIXED NAV === */
+.main-content {
+  padding-top: 70px;
+}
+
+/* === PAGE TRANSITION === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.main-content > * {
+  animation: fadeInUp 0.35s ease-out;
+}
