@@ -71,8 +71,8 @@ def create_review(
             detail="You have already reviewed this title. Edit your existing review instead.",
         )
 
-    # Run ML sentiment analysis
-    result = analyze_sentiment(data.review_text)
+    # Run ML sentiment analysis with text and star rating context
+    result = analyze_sentiment(data.review_text, rating=data.rating)
 
     review = Review(
         movie_id=movie_id,
@@ -112,10 +112,11 @@ def update_review(
         review.rating = data.rating
     if data.review_text is not None:
         review.review_text = data.review_text
-        # Re-run sentiment analysis on updated text
-        result = analyze_sentiment(data.review_text)
-        review.sentiment = result["sentiment"]
-        review.confidence = result["confidence"]
+    
+    # Re-run ML sentiment analysis on updated text and rating
+    result = analyze_sentiment(review.review_text, rating=review.rating)
+    review.sentiment = result["sentiment"]
+    review.confidence = result["confidence"]
 
     review.updated_at = datetime.now(timezone.utc)
     db.commit()

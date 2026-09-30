@@ -19,6 +19,7 @@ RATING_SCORE_MAP = {
 
 SENTIMENT_SCORE_MAP = {
     "Positive": 1,
+    "Neutral": 0,
     "Negative": -1,
 }
 
